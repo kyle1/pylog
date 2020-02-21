@@ -6,6 +6,30 @@ from email import encoders
 
 
 class Email:
+    """
+    A class used to send an email.
+
+    Parameters
+    ----------
+    from_addr : string
+        Email address to send email from.
+
+    from_password : string
+        Email address password.
+
+    to_addr : string
+        Email address to send email to.
+
+    subject : string
+        Email subject.
+
+    body : string
+        Email body content.
+
+    files : list (string)
+        Files to attach to the email.
+    """
+
     def __init__(self, from_addr, from_password, to_addr, subject, body, files):
         self._from_address = None
         self._from_password = None
@@ -40,15 +64,14 @@ class Email:
                 part = MIMEBase('application', 'octet-stream')
                 part.set_payload(attachment.read())
             encoders.encode_base64(part)
-            part.add_header('Content-disposition', f'attachment; filename={f.split("/")[-1]}')
+            part.add_header('Content-disposition',
+                            f'attachment; filename={f.split("/")[-1]}')
             self._mime_message.attach(part)
 
     def _send_email(self):
         smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
         smtp_server.starttls()
         smtp_server.login(self._from_address, self._from_password)
-        smtp_server.sendmail(self._from_address, self._to_address, self._mime_message.as_string())
+        smtp_server.sendmail(self._from_address,
+                             self._to_address, self._mime_message.as_string())
         smtp_server.quit()
-
-
-
