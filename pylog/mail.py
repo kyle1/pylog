@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -64,8 +65,9 @@ class Email:
                 part = MIMEBase('application', 'octet-stream')
                 part.set_payload(attachment.read())
             encoders.encode_base64(part)
+            filename = os.path.basename(f)
             part.add_header('Content-disposition',
-                            f'attachment; filename={f.split("/")[-1]}')
+                            f'attachment; filename={filename}')
             self._mime_message.attach(part)
 
     def _send_email(self):
