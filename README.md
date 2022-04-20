@@ -1,3 +1,5 @@
-# pylog
+# Pylog  :snake:
 
-Pylog is a package for creating data logs and sending emails.
+Pylog is a package for building data logs and sending emails.
+
+... that's it.
